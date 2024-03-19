@@ -1,0 +1,19 @@
+This is a very simple file with some
+text to be checked by our prototype
+spelling checker.
+
+It has some words that should not be recognized.
+
+Just some fun text! (You shouldn't take it seriously.)
+
+Slowly she turned and said, "Bob, I don't know
+if I like you any more.  Do you know why?"
+
+He replied "As the raven once said: 'Never more'".
+
+As she sighed and left the room, the entire chorus
+began to whistle and sing. They sang loudly; they sang
+quickly.  They wouldn't stop singing, even when he began to 
+yell at them to stop.  
+
+"Stop!" He yelled.
