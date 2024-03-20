@@ -60,7 +60,7 @@ public class MyHashTable<K,V>
     }
 
     private int hashIndex(K key) {
-        return key.hashCode() % DEFAULT_LEN;
+        return Math.abs(key.hashCode()) % DEFAULT_LEN;
     }
 
     /**
@@ -104,7 +104,11 @@ public class MyHashTable<K,V>
         // return V;
         //}
 
+//        System.out.println("Key: " + key);
         int index = hashIndex(key);
+        if(index < 0 || index > 5) {
+            index = 2;
+        }
         HashNode<K, V> root = hashArray.getEntry(index);
 
         while (root != null) {
@@ -121,6 +125,16 @@ public class MyHashTable<K,V>
         newNode.next = root;
         hashArray.replace(index, newNode);
         size++;
+//        System.out.println("Size of hash table: " + size);
+
+//        if(size > 50) {
+//            AList<V> values = values();
+//
+//            System.out.println("actual Size of hash table: " + values.getLength());
+//        }
+//        for (int i = 0; i < arr.length; i++) {
+//            System.out.println(arr[i].value);
+//        }
         return null;
     }
 

@@ -17,6 +17,8 @@ public class AList<T> implements ListInterface<T> , Iterable<T>{
 
     private T[] list;   // Array of list entries; ignore list[0]
     private int numberOfEntries;
+
+    private int lowerLimit = 0;
     private boolean initialized = false;
     private static final int DEFAULT_CAPACITY = 25;
     private static final int MAX_CAPACITY = 10000;
@@ -73,7 +75,7 @@ public class AList<T> implements ListInterface<T> , Iterable<T>{
 
     public void add(int newPosition, T newEntry) {
         checkInitialization();
-        if ((newPosition >= 1) && (newPosition <= numberOfEntries + 1)) {
+        if ((newPosition >= lowerLimit) && (newPosition <= numberOfEntries + 1)) {
             if (newPosition <= numberOfEntries) {
                 makeRoom(newPosition);
             }
@@ -87,7 +89,7 @@ public class AList<T> implements ListInterface<T> , Iterable<T>{
     } // end add
 
     private void makeRoom(int newPosition) {
-        assert (newPosition >= 1)
+        assert (newPosition >= lowerLimit)
                 && (newPosition <= numberOfEntries + 1);
 
         int newIndex = newPosition;
@@ -103,7 +105,7 @@ public class AList<T> implements ListInterface<T> , Iterable<T>{
 
     public T remove(int givenPosition) {
         checkInitialization();
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
+        if ((givenPosition >= lowerLimit) && (givenPosition <= numberOfEntries)) {
             assert !isEmpty();
             T result = list[givenPosition]; // Get entry to be removed
             // Move subsequent entries towards entry to be removed,
@@ -120,7 +122,7 @@ public class AList<T> implements ListInterface<T> , Iterable<T>{
     } // end remove
 
     private void removeGap(int givenPosition) {
-        assert (givenPosition >= 1) && (givenPosition < numberOfEntries);
+        assert (givenPosition >= lowerLimit) && (givenPosition < numberOfEntries);
 
         int removedIndex = givenPosition;
         int lastIndex = numberOfEntries;
@@ -141,7 +143,7 @@ public class AList<T> implements ListInterface<T> , Iterable<T>{
 
     public T replace(int givenPosition, T newEntry) {
         checkInitialization();
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
+        if ((givenPosition >= lowerLimit) && (givenPosition <= numberOfEntries)) {
             assert !isEmpty();
             T originalEntry = list[givenPosition];
             list[givenPosition] = newEntry;
@@ -153,7 +155,8 @@ public class AList<T> implements ListInterface<T> , Iterable<T>{
 
     public T getEntry(int givenPosition) {
         checkInitialization();
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
+//        System.out.println("givenPosition: " + givenPosition);
+        if ((givenPosition >= lowerLimit) && (givenPosition <= numberOfEntries)) {
             assert !isEmpty();
             return list[givenPosition];
         } else {
@@ -212,7 +215,7 @@ public class AList<T> implements ListInterface<T> , Iterable<T>{
 
     } // end getPostion
     
-      public Iterator<T> iterator(){
+    public Iterator<T> iterator(){
         return new IteratorForAList();
     } // end iterator
     

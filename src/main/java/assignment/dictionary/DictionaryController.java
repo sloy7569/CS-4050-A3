@@ -47,7 +47,7 @@ public class DictionaryController implements Initializable {
             Iterator<Wordlet> iter = lines.getLines()[i].getIterator();
             while (iter.hasNext()) {
                 Wordlet word = iter.next();
-                Text checkedWord = new Text(word.getWord());
+                Text checkedWord = new Text(word.getWord() + " ");
                 checkedWord.setFont(Font.font(family, size));
                 if (word.isSpelledCorrectly()) {
                     checkedWord.setFill(Color.BLUE);

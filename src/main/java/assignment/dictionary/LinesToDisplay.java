@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 public class LinesToDisplay {
 
-    public static final int LINES = 10;     // Display 10 lines
+    public static final int LINES = 20; // Was originally 10, I changed it
     private AList<Wordlet>[] lines;
     private int currentLine;
 
@@ -19,11 +19,13 @@ public class LinesToDisplay {
      */
     public LinesToDisplay() {
         //ADD CODE FOR THE CONSTRUCTOR
-//>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
-        
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
+        //>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>
+        lines = (AList<Wordlet>[]) new AList[LINES]; // Initialize the lines variable
+        for (int i = 0; i < LINES; i++) {
+            lines[i] = new AList<Wordlet>(); // Initialize the AList's
+        }
+        currentLine = 0;
+        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     /**
@@ -33,9 +35,9 @@ public class LinesToDisplay {
     public void addWordlet(Wordlet w) {
         //ADD CODE HERE TO ADD A WORDLET TO THE CURRENT LINE
 
-//>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
-       
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        //>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>
+        lines[currentLine].add(w); // add the wordlet
+        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     /**
@@ -46,7 +48,13 @@ public class LinesToDisplay {
     public void nextLine() {
         //ADD CODE TO HANDLE THE NEXT LINE
 //>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
-
+        if(currentLine + 1 >= LINES) { // if we're going to overflow,
+            for(int i = 0; i < LINES-1; i++) {
+                lines[i] = lines[i + 1]; // move all lines up one
+            }
+            lines[currentLine].clear(); // since the current line is the upper limit,
+                                        // stay on it and clear it to make it new
+        } else currentLine++;
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 

@@ -65,20 +65,34 @@ public class MisSpellActionThread implements Runnable {
     public void loadDictionary(String theFileName, DictionaryInterface<String, String> theDictionary) {
         Scanner input;
         try {
-// ADD CODE HERE
+            // ADD CODE HERE
+            // Goal: read words from file theFileName and add them into theDictionary
 // >>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+            File file = new File(theFileName); // open the file
+            input = new Scanner(file); // scan through the dictionary words file
+
+            while(input.hasNextLine()) {
+                String line = input.nextLine();
+                theDictionary.add(line, line); // read through and add the words to theDictionary
+            }
+
+            input.close();
+
+            dictionaryLoaded = true;
             //IOException e
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-            System.out.println("TESTTESt");
+//            System.out.println("TESTTESt");
 
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("There was an error in reading or opening the file: " + theFileName);
             System.out.println(e.getMessage());
         }
 
     }
+
+
 
     /**
      * Get the words to check, check them, then put Wordlets into myLines. When
@@ -91,10 +105,31 @@ public class MisSpellActionThread implements Runnable {
  
 // ADD CODE HERE
 // >>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            File file = new File(theFileName); // open the test file
+            input = new Scanner(file);
 
+            while(input.hasNextLine()) { // while there are more lines to read
+                String line = input.nextLine();
+                String[] words = line.split(" "); // split line into words
+
+                for(String word : words) { // for each word in the line
+                    // Create a wordlet holding the word and if it's in the dictionary
+                    boolean spelling = checkWord(word, theDictionary);
+                    Wordlet wl = new Wordlet(word, spelling);
+                    myLines.addWordlet(wl); // add the wordlet to LinesToDisplay object
+                }
+
+                // Do an animation to wait for the user
+                showLines(myLines);
+
+                myLines.nextLine(); // wait for the next line
+
+            }
+
+            input.close();
             //IOException e
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            System.out.println("TESTTESt");
+//            System.out.println("TESTTESt");
 
 
         } catch (IOException e) {
@@ -112,10 +147,12 @@ public class MisSpellActionThread implements Runnable {
         boolean result = false;
 
         // ADD CODE HERE
-//>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        
+//>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        // Trim the word to remove punctuation marks like commas and periods
+        String trimmedWord = word.replaceAll("^[\\p{Punct}]+|[\\p{Punct}]+$", "");
 
-
-
+        // Check the dictionary
+        result = theDictionary.contains(trimmedWord);
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
